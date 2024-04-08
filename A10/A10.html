@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Example</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 50px;
+    }
+</style>
+</head>
+<body>
+    <h1>Cookie Example</h1>
+    <p id="cookieValue"></p>
+
+    <script>
+      
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+      
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        let cookieValue = getCookie("username");
+        if (cookieValue != "") {
+            document.getElementById("cookieValue").textContent = "Welcome back, " + cookieValue + "!";
+        } else {
+            let username = prompt("Please enter your name:");
+            if (username != "" && username != null) {
+                setCookie("username", username, 365);
+                document.getElementById("cookieValue").textContent = "Hello, " + username + "! Your cookie has been set.";
+            }
+        }
+    </script>
+    <footer>
+		<p>&copy; Kelvin Zamor, April 9, 2024</p>
+	</footer>
+</body>
+</html>
